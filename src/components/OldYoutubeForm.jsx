@@ -10,6 +10,27 @@ const OldYoutubeForm = () => {
     console.log('Form Data: ', values)
   }
 
+  const validate = (values) => {
+    const errors = {}
+    if (!values.name) {
+      errors.name = 'Ad Soyad gerekli.'
+    }
+    if (!values.email) {
+      errors.email = 'Email gerekli.'
+    } else if (
+      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+        values.email,
+      )
+    ) {
+      errors.email = 'Email formatı hatalı.'
+    }
+
+    if (!values.channel) {
+      errors.channel = 'Channel gerekli.'
+    }
+    return errors
+  }
+
   const validationSchema = Yup.object({
     name: Yup.string().required('Ad Soyad gerekli.'),
     email: Yup.string()
@@ -35,7 +56,9 @@ const OldYoutubeForm = () => {
             type="text"
             name="name"
             id="name"
-            {...formik.getFieldProps('name')}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
           />
           {formik.touched.name && formik.errors.name ? (
             <span className="error">{formik.errors.name}</span>
@@ -48,7 +71,9 @@ const OldYoutubeForm = () => {
             type="email"
             name="email"
             id="email"
-            {...formik.getFieldProps('email')}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
           />
           {formik.touched.email && formik.errors.email ? (
             <span className="error">{formik.errors.email}</span>
@@ -61,7 +86,9 @@ const OldYoutubeForm = () => {
             type="text"
             name="channel"
             id="channel"
-            {...formik.getFieldProps('channel')}
+            value={formik.values.channel}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
           {formik.touched.channel && formik.errors.channel ? (
             <span className="error">{formik.errors.channel}</span>
