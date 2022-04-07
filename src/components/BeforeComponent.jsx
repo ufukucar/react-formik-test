@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Formik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-const YoutubeForm = () => {
+const BeforeComponent = () => {
   const initialValues = { name: '', email: '', channel: '' }
 
   const onSubmit = (values) => {
@@ -18,13 +18,16 @@ const YoutubeForm = () => {
     channel: Yup.string().required('Channel gerekli.'),
   })
 
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    //validate,
+    validationSchema,
+  })
+
   //console.log('visited fields: ', formik.touched)
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
+    <div>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-control">
           <label htmlFor="hame">Name</label>
@@ -66,8 +69,8 @@ const YoutubeForm = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
-    </Formik>
+    </div>
   )
 }
 
-export default YoutubeForm
+export default BeforeComponent
