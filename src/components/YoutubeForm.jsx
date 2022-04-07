@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import TextError from './TextError'
 
@@ -16,6 +16,12 @@ const YoutubeForm = () => {
       twitter: '',
     },
     phoneNumbers: ['', ''],
+    phNumbers: [
+      {
+        cep: '',
+        ev: '',
+      },
+    ], // For FieldArray
   }
 
   const onSubmit = (values) => {
@@ -81,26 +87,56 @@ const YoutubeForm = () => {
               )
             }}
           </Field>
+        </div>
 
-          <div className="form-control">
-            <label htmlFor="facebook">Facebook Profile</label>
-            <Field type="text" name="social.facebook" id="facebook" />
-          </div>
+        <div className="form-control">
+          <label htmlFor="facebook">Facebook Profile</label>
+          <Field type="text" name="social.facebook" id="facebook" />
+        </div>
 
-          <div className="form-control">
-            <label htmlFor="twitter">Twitter Profile</label>
-            <Field type="text" name="social.twitter" id="twitter" />
-          </div>
+        <div className="form-control">
+          <label htmlFor="twitter">Twitter Profile</label>
+          <Field type="text" name="social.twitter" id="twitter" />
+        </div>
 
-          <div className="form-control">
-            <label htmlFor="primaryPh">Primary Phone Number</label>
-            <Field type="text" name="phoneNumbers[0]" id="primaryPh" />
-          </div>
+        <div className="form-control">
+          <label htmlFor="primaryPh">Primary Phone Number</label>
+          <Field type="text" name="phoneNumbers[0]" id="primaryPh" />
+        </div>
 
-          <div className="form-control">
-            <label htmlFor="secondaryPh">Secondary Phone Number</label>
-            <Field type="text" name="phoneNumbers[1]" id="secondaryPh" />
-          </div>
+        <div className="form-control">
+          <label htmlFor="secondaryPh">Secondary Phone Number</label>
+          <Field type="text" name="phoneNumbers[1]" id="secondaryPh" />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="">List of phone Numbers - FormArray</label>
+          <FieldArray name="phNumbers">
+            {(fieldArrayProps) => {
+              // console.log('fieldArrayProps: ', fieldArrayProps)
+              const { push, remove, form } = fieldArrayProps
+              const { values } = form
+              const { phNumbers } = values
+              return (
+                <div>
+                  {phNumbers.map((phNumber, index) => (
+                    <div key={index}>
+                      <Field name={`phNumber.${index}.cep`} placeholder="cep" />
+                      <Field name={`phNumber.${index}.ev`} placeholder="ev" />
+                      {phNumbers.length > 1 && (
+                        <button type="button" onClick={() => remove(index)}>
+                          Çıkart
+                        </button>
+                      )}
+                      <button type="button" onClick={() => push('')}>
+                        Ekle
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )
+            }}
+          </FieldArray>
         </div>
 
         <button type="submit">Submit</button>
