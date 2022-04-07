@@ -15,6 +15,7 @@ const YoutubeForm = () => {
       facebook: '',
       twitter: '',
     },
+    phoneNumbers: ['', ''],
   }
 
   const onSubmit = (values) => {
@@ -71,7 +72,7 @@ const YoutubeForm = () => {
           <Field name="address">
             {(props) => {
               const { field, form, meta } = props
-              console.log('render props: ', props)
+              // console.log('render props: ', props)
               return (
                 <div>
                   <input type="text" id="address" {...field} />
@@ -89,6 +90,16 @@ const YoutubeForm = () => {
           <div className="form-control">
             <label htmlFor="twitter">Twitter Profile</label>
             <Field type="text" name="social.twitter" id="twitter" />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="primaryPh">Primary Phone Number</label>
+            <Field type="text" name="phoneNumbers[0]" id="primaryPh" />
+          </div>
+
+          <div className="form-control">
+            <label htmlFor="secondaryPh">Secondary Phone Number</label>
+            <Field type="text" name="phoneNumbers[1]" id="secondaryPh" />
           </div>
         </div>
 
