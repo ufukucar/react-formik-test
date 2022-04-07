@@ -3,16 +3,37 @@ import React from 'react'
 import { useFormik } from 'formik'
 
 const YoutubeForm = () => {
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      channel: '',
-    },
+  const initialValues = { name: '', email: '', channel: '' }
 
-    onSubmit: (values) => {
-      console.log('Form Data: ', values)
-    },
+  const onSubmit = (values) => {
+    console.log('Form Data: ', values)
+  }
+
+  const validate = (values) => {
+    const errors = {}
+    if (!values.name) {
+      errors.name = 'Ad Soyad gerekli.'
+    }
+    if (!values.email) {
+      errors.email = 'Email gerekli.'
+    } else if (
+      !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
+        values.email,
+      )
+    ) {
+      errors.email = 'Email formatı hatalı.'
+    }
+
+    if (!values.channel) {
+      errors.channel = 'Channel gerekli.'
+    }
+    return errors
+  }
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validate,
   })
 
   return (
