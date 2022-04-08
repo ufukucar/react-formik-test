@@ -2,29 +2,34 @@ import React from 'react'
 import { Field, ErrorMessage, FastField } from 'formik'
 import TextError from '../TextError'
 
-const RadioButton = (props) => {
+const CheckboxGroup = (props) => {
   const { label, name, options, ...rest } = props
 
   return (
     <div className="form-control">
       <label>{label}</label>
-      <FastField name={name} {...rest}>
+      <Field name={name} {...rest}>
         {({ field }) => {
           return options.map((opt, index) => {
             return (
               <React.Fragment key={index}>
-                <input type="radio" id={opt.key} {...field} value={opt.key} />
+                <input
+                  type="checkbox"
+                  id={opt.key}
+                  {...field}
+                  value={opt.key}
+                  checked={field.value.includes(opt.key)}
+                />
                 <label htmlFor={opt.key}>{opt.value}</label>
-                <br />
               </React.Fragment>
             )
           })
         }}
-      </FastField>
+      </Field>
 
       <ErrorMessage name={name} component={TextError} />
     </div>
   )
 }
 
-export default RadioButton
+export default CheckboxGroup
