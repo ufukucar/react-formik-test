@@ -1,13 +1,6 @@
 import React from 'react'
 
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-  FieldArray,
-  FastField,
-} from 'formik'
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import TextError from './TextError'
 
@@ -82,9 +75,8 @@ const YoutubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="address">Adress</label>
-          <FastField name="address">
+          <Field name="address">
             {(props) => {
-              console.log('Field Rendered')
               const { field, form, meta } = props
               // console.log('render props: ', props)
               return (
@@ -94,7 +86,7 @@ const YoutubeForm = () => {
                 </div>
               )
             }}
-          </FastField>
+          </Field>
         </div>
 
         <div className="form-control">
