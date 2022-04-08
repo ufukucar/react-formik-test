@@ -58,6 +58,7 @@ const YoutubeForm = () => {
     setTimeout(() => {
       // Simulate server latency
       onSubmitProps.setSubmitting(false)
+      onSubmitProps.resetForm()
     }, 1000)
   }
 
@@ -194,6 +195,10 @@ const YoutubeForm = () => {
             >
               Submit
             </button> */}
+            {/* Klasik durum  */}
+            <button type="reset" className="submit">
+              RESET
+            </button>{' '}
             <button
               type="submit"
               className="submit"
