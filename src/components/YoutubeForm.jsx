@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   Formik,
@@ -12,8 +12,30 @@ import * as Yup from 'yup'
 import TextError from './TextError'
 
 const YoutubeForm = () => {
+  const [formValues, setFormValues] = useState(null)
+
   const initialValues = {
     name: '',
+    email: '',
+    channel: '',
+    comments: '',
+    address: '',
+    social: {
+      facebook: '',
+      twitter: '',
+    },
+    phoneNumbers: ['', ''],
+    phNumbers: [
+      {
+        cep: '',
+        ev: '',
+      },
+    ], // For FieldArray
+  }
+
+  // Apiden geldiğini varsayalım
+  const savedValues = {
+    name: 'Ufuk',
     email: 'ufkucar@gmail.com',
     channel: 'MyChannel',
     comments: 'Comments',
@@ -30,7 +52,6 @@ const YoutubeForm = () => {
       },
     ], // For FieldArray
   }
-
   const onSubmit = (values, onSubmitProps) => {
     console.log('Form Data: ', values)
     console.log('on submit props: ', onSubmitProps)
@@ -52,15 +73,16 @@ const YoutubeForm = () => {
   //console.log('visited fields: ', formik.touched)
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValues || initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      enableReinitialize
       // validateOnChange={false}
       // validateOnBlur={false}
       //validateOnMount
     >
       {(formik) => {
-        console.log('formik props', formik)
+        //console.log('formik props', formik)
         return (
           <Form>
             <div className="form-control">
@@ -73,7 +95,6 @@ const YoutubeForm = () => {
                 className="error"
               />
             </div>
-
             <div className="form-control">
               <label htmlFor="email">Email</label>
               <FastField type="email" name="email" id="email" />
@@ -82,20 +103,17 @@ const YoutubeForm = () => {
                 {(errorMsg) => <div className="error">{errorMsg}</div>}
               </ErrorMessage>
             </div>
-
             <div className="form-control">
               <label htmlFor="channel">Channel</label>
               <FastField type="text" name="channel" id="channel" />
 
               <ErrorMessage name="channel" component="div" className="error" />
             </div>
-
             <div className="form-control">
               <label htmlFor="comments">Comments</label>
               <FastField as="textarea" id="comments" name="comments" />
               <ErrorMessage name="comments" component="div" className="error" />
             </div>
-
             <div className="form-control">
               <label htmlFor="address">Adress</label>
               <FastField name="address">
@@ -114,27 +132,22 @@ const YoutubeForm = () => {
                 }}
               </FastField>
             </div>
-
             <div className="form-control">
               <label htmlFor="facebook">Facebook Profile</label>
               <FastField type="text" name="social.facebook" id="facebook" />
             </div>
-
             <div className="form-control">
               <label htmlFor="twitter">Twitter Profile</label>
               <FastField type="text" name="social.twitter" id="twitter" />
             </div>
-
             <div className="form-control">
               <label htmlFor="primaryPh">Primary Phone Number</label>
               <FastField type="text" name="phoneNumbers[0]" id="primaryPh" />
             </div>
-
             <div className="form-control">
               <label htmlFor="secondaryPh">Secondary Phone Number</label>
               <FastField type="text" name="phoneNumbers[1]" id="secondaryPh" />
             </div>
-
             <div className="form-control">
               <label htmlFor="">List of phone Numbers - FormArray</label>
               <FieldArray name="phNumbers">
@@ -174,7 +187,6 @@ const YoutubeForm = () => {
                 }}
               </FieldArray>
             </div>
-
             {/* <button
               type="submit"
               className="submit"
@@ -188,8 +200,14 @@ const YoutubeForm = () => {
               disabled={!formik.isValid || formik.isSubmitting}
             >
               Submit
+            </button>{' '}
+            <button
+              type="button"
+              className="submit"
+              onClick={() => setFormValues(savedValues)}
+            >
+              Load Saved Data
             </button>
-
             {Object.keys(formik.errors).length > 0 ? (
               <div className="error">
                 Formda hatalar mevcut. Lütfen formu doldurunuz!
