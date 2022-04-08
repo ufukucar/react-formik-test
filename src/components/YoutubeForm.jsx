@@ -31,8 +31,13 @@ const YoutubeForm = () => {
     ], // For FieldArray
   }
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, onSubmitProps) => {
     console.log('Form Data: ', values)
+    console.log('on submit props: ', onSubmitProps)
+    setTimeout(() => {
+      // Simulate server latency
+      onSubmitProps.setSubmitting(false)
+    }, 1000)
   }
 
   const validationSchema = Yup.object({
@@ -55,7 +60,7 @@ const YoutubeForm = () => {
       //validateOnMount
     >
       {(formik) => {
-        //console.log('formik props', formik)
+        console.log('formik props', formik)
         return (
           <Form>
             <div className="form-control">
@@ -170,13 +175,28 @@ const YoutubeForm = () => {
               </FieldArray>
             </div>
 
-            <button
+            {/* <button
               type="submit"
               className="submit"
               disabled={!formik.dirty && !formik.isValid}
             >
               Submit
+            </button> */}
+            <button
+              type="submit"
+              className="submit"
+              disabled={!formik.isValid || formik.isSubmitting}
+            >
+              Submit
             </button>
+
+            {Object.keys(formik.errors).length > 0 ? (
+              <div className="error">
+                Formda hatalar mevcut. Lütfen formu doldurunuz!
+              </div>
+            ) : (
+              ''
+            )}
           </Form>
         )
       }}
