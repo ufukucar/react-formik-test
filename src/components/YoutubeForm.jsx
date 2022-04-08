@@ -49,18 +49,20 @@ const YoutubeForm = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      validateOnChange={false}
+      validateOnBlur={false}
     >
       <Form>
         <div className="form-control">
           <label htmlFor="hame">Name</label>
-          <Field type="text" name="name" id="name" />
+          <FastField type="text" name="name" id="name" />
 
           <ErrorMessage name="name" component={TextError} className="error" />
         </div>
 
         <div className="form-control">
           <label htmlFor="email">Email</label>
-          <Field type="email" name="email" id="email" />
+          <FastField type="email" name="email" id="email" />
 
           <ErrorMessage name="email">
             {(errorMsg) => <div className="error">{errorMsg}</div>}
@@ -69,14 +71,14 @@ const YoutubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="channel">Channel</label>
-          <Field type="text" name="channel" id="channel" />
+          <FastField type="text" name="channel" id="channel" />
 
           <ErrorMessage name="channel" component="div" className="error" />
         </div>
 
         <div className="form-control">
           <label htmlFor="comments">Comments</label>
-          <Field as="textarea" id="comments" name="comments" />
+          <FastField as="textarea" id="comments" name="comments" />
           <ErrorMessage name="comments" component="div" className="error" />
         </div>
 
@@ -99,22 +101,22 @@ const YoutubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="facebook">Facebook Profile</label>
-          <Field type="text" name="social.facebook" id="facebook" />
+          <FastField type="text" name="social.facebook" id="facebook" />
         </div>
 
         <div className="form-control">
           <label htmlFor="twitter">Twitter Profile</label>
-          <Field type="text" name="social.twitter" id="twitter" />
+          <FastField type="text" name="social.twitter" id="twitter" />
         </div>
 
         <div className="form-control">
           <label htmlFor="primaryPh">Primary Phone Number</label>
-          <Field type="text" name="phoneNumbers[0]" id="primaryPh" />
+          <FastField type="text" name="phoneNumbers[0]" id="primaryPh" />
         </div>
 
         <div className="form-control">
           <label htmlFor="secondaryPh">Secondary Phone Number</label>
-          <Field type="text" name="phoneNumbers[1]" id="secondaryPh" />
+          <FastField type="text" name="phoneNumbers[1]" id="secondaryPh" />
         </div>
 
         <div className="form-control">
@@ -125,12 +127,22 @@ const YoutubeForm = () => {
               const { push, remove, form } = fieldArrayProps
               const { values } = form
               const { phNumbers } = values
+
+              console.log('Form errors: ', form.errors)
               return (
                 <div>
                   {phNumbers.map((phNumber, index) => (
                     <div key={index}>
-                      <Field name={`phNumber.${index}.cep`} placeholder="cep" />
-                      <Field name={`phNumber.${index}.ev`} placeholder="ev" />
+                      <FastField
+                        type="text"
+                        name={`phNumber.${index}.cep`}
+                        placeholder="cep"
+                      />
+                      <FastField
+                        type="text"
+                        name={`phNumber.${index}.ev`}
+                        placeholder="ev"
+                      />
                       {phNumbers.length > 1 && (
                         <button type="button" onClick={() => remove(index)}>
                           Çıkart
