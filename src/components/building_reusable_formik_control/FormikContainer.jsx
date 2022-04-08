@@ -6,19 +6,28 @@ import FormikControl from './FormikControl'
 const FormikContainer = () => {
   const dropdownOptions = [
     { key: 'Select an option', value: '' },
-    { key: 'Option 1', value: 'option1' },
-    { key: 'Option 2', value: 'option2' },
-    { key: 'Option 3', value: 'option3' },
+    { key: '1', value: 'Select 1' },
+    { key: '2', value: 'Select 2' },
+    { key: '3', value: 'Select 3' },
   ]
+
+  const radioOption = [
+    { key: '1', value: 'Radio Option 1' },
+    { key: '2', value: 'Radio Option2' },
+    // { key: 'radioKey3', value: 'Radio Option 3' },
+  ]
+
   const initialValues = {
     email: '',
     description: '',
     selectOption: '',
+    radioOption: '',
   }
   const validationSchema = Yup.object({
     email: Yup.string().required('Email zorunludur'),
     description: Yup.string().required('Açıklama zorunludur'),
     selectOption: Yup.string().required('Seçim zorunludur'),
+    radioOption: Yup.string().required('Radio Seçim zorunludur'),
   })
   const onSubmit = (values) => {
     console.log('Form Data: ', values)
@@ -53,6 +62,15 @@ const FormikContainer = () => {
             label="Select a topic"
             name="selectOption"
             options={dropdownOptions}
+          />
+
+          {/* Radio */}
+
+          <FormikControl
+            control="radio"
+            label="Radio topic"
+            name="radioOption"
+            options={radioOption}
           />
 
           <button className="submit" type="submit">

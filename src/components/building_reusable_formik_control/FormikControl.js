@@ -1,5 +1,6 @@
 import React from 'react'
 import Input from './Input'
+import RadioButton from './RadioButton'
 import Select from './Select'
 import Textarea from './Textarea'
 
@@ -16,7 +17,7 @@ function FormikControl(props) {
     case 'checkbox':
       return
     case 'radio':
-      return
+      return <RadioButton {...rest} />
     case 'file':
       return
     case 'date':
