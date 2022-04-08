@@ -41,6 +41,7 @@ const YoutubeForm = () => {
       .email('Email formatı hatalı.')
       .required('Email gerekli.'),
     channel: Yup.string().required('Channel gerekli.'),
+    comments: Yup.string().required('Comments gerekli.'),
   })
 
   //console.log('visited fields: ', formik.touched)
@@ -128,7 +129,7 @@ const YoutubeForm = () => {
               const { values } = form
               const { phNumbers } = values
 
-              console.log('Form errors: ', form.errors)
+              //console.log('Form errors: ', form.errors)
               return (
                 <div>
                   {phNumbers.map((phNumber, index) => (
@@ -159,7 +160,9 @@ const YoutubeForm = () => {
           </FieldArray>
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit">
+          Submit
+        </button>
       </Form>
     </Formik>
   )
