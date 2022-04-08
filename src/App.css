@@ -34,7 +34,7 @@ textarea {
 
 .submit {
   display: inline-block;
-  
+  cursor: pointer;
   padding: 6px 18px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -42,8 +42,13 @@ textarea {
   background-color: #337ab7;
   border: 1px solid #337ab7;
   border-radius: 4px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 50px;
+}
+
+.submit:disabled {
+  background-color: #ccc;
+  border: 1px solid #ccc;
 }
 
 .error {
